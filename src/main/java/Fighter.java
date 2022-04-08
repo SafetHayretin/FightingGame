@@ -9,5 +9,7 @@ public abstract class Fighter {
         this.armor = armor;
     }
 
-
+    public void attackMove(){
+        
+    }
 }
