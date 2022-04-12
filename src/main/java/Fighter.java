@@ -28,36 +28,32 @@ public class Fighter {
 
     /**
      * A way that your fighter attacks the opponent
-     * @param fighter
      */
     public void attackMove(Fighter fighter) {
         int health = fighter.getHealth();
-        int armor = fighter.getArmor();
-        int damage = getAttack();
+        int armor = calculatesArmorPoints(fighter.getArmor());
+        int damage = calculatesAttackDamage(getAttack());
 
-        if (isArmorBroken()) {
-            health -= damage;
-            fighter.setHealth(health);
-        } else {
-            armor -= damage;
-            fighter.setArmor(armor);
-
-            if (armor < 0) {
-                health += armor;
-                fighter.setHealth(health);
-            }
-        }
+        health -= (damage-armor);
+        fighter.setHealth(health);
     }
 
     /**
-     * Checker if your fighter's armor is broken
-     * If your armor is broken
-     * @return true
+     * Calculates the damage after processing it with the percentage between 80% and 120%
+     *
+     * @param damage
+     * @return
      */
-    public boolean isArmorBroken() {
-        if (armor <= 0) {
-            return true;
-        } else return false;
+    public int calculatesAttackDamage(int damage){
+        RandomGenerator generator = new RandomGenerator();
+        double percentage = (generator.generateRandomNumber()+80)/100;
+        return (int)(damage*percentage);
+    }
+
+    public int calculatesArmorPoints(int armor){
+        RandomGenerator generator = new RandomGenerator();
+        double percentage = (generator.generateRandomNumber()+80)/100;
+        return (int)(armor*percentage);
     }
 
     public int getHealth() {
@@ -81,18 +77,6 @@ public class Fighter {
             this.health = 0;
         } else {
             this.health = health;
-        }
-    }
-
-    /**
-     * Updates your armor
-     * Can't be negative
-     */
-    public void setArmor(int armor) {
-        if (armor <= 0) {
-            this.armor = 0;
-        } else {
-            this.armor = armor;
         }
     }
 }
