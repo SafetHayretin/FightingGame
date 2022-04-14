@@ -1,6 +1,6 @@
-package Heroes;
+package heroes;
 
-import Extras.RandomNumber;
+import utilities.RandomNumber;
 
 /**
  * Heroes.Fighter class with health, armor and attack.
@@ -11,9 +11,11 @@ import Extras.RandomNumber;
  * When creating your fighter you can NOT set your health, armor or attack points to negative number.
  */
 public abstract class Fighter {
+    private String name;
     private int health;
     private int armor;
     private final int ATTACK;
+    private int multiplier = 1;
 
     /**
      * Heroes.Fighter with 3 parameters
@@ -21,10 +23,14 @@ public abstract class Fighter {
      * @param attack can't be negative
      * @param armor can't be negative
      */
-    public Fighter(int health, int attack, int armor) {
+    public Fighter(String name, int health, int attack, int armor) {
         if(health < 0 || attack < 0 || armor < 0){
             throw new IllegalArgumentException("Can't assign negative parameters!");
         }
+        if(name == null || name.equals("")){
+            throw new IllegalArgumentException("Name can't be empty!");
+        }
+        this.name = name;
         this.health = health;
         this.ATTACK = attack;
         this.armor = armor;
@@ -33,13 +39,13 @@ public abstract class Fighter {
     /**
      * Every children class must have way to attack enemy
      */
-    public abstract void attackMove(Fighter enemy);
+    public abstract void attackEnemy(Fighter enemy);
 
     /**
      * Calculates the damage after processing it with the percentage between 80% and 120%
      */
     public int calculatesAttackDamage(int damage){
-        double percentage = (RandomNumber.generateRandomNumber()+80)/100;
+        double percentage = generatePercentage();
         return (int)(damage*percentage);
     }
 
@@ -47,13 +53,18 @@ public abstract class Fighter {
      * Calculates armor after processing it with the percentage between 80% and 120%
      */
     public int calculatesArmorPoints(int armor){
-        double percentage = (RandomNumber.generateRandomNumber()+80)/100;
+        double percentage = generatePercentage();
         return (int)(armor*percentage);
     }
 
-    public boolean isBlockingPossible(){
-        return false;
+    /**
+     * @return percentage between 80% and 120%
+     */
+    public double generatePercentage(){
+        return (RandomNumber.generateRandomNumber()+80)/100;
     }
+
+    public boolean isBlockingPossible(){return false;};
 
     public int getHealth() {
         return health;
@@ -65,6 +76,10 @@ public abstract class Fighter {
 
     public int getArmor() {
         return armor;
+    }
+
+    public String getName(){
+        return name;
     }
 
     /**

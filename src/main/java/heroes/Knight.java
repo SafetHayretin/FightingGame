@@ -1,25 +1,22 @@
-package Heroes;
+package heroes;
 
-import Extras.RandomNumber;
+import utilities.RandomNumber;
 
-public class Assassin extends Fighter {
-    String type = "Assassin";
-
+public class Knight extends Fighter{
     /**
      * Heroes.Fighter with 3 parameters
-     *
      * @param health can't be negative
      * @param attack can't be negative
      * @param armor  can't be negative
      */
-    public Assassin(int health, int attack, int armor) {
-        super(health, attack, armor);
+    public Knight(String name, int health, int attack, int armor) {
+        super(name, health, attack, armor);
     }
 
     /**
      * A way that your fighter attacks the opponent
      */
-    public void attackMove(Fighter enemy) {
+    public void attackEnemy(Fighter enemy) {
         if(enemy.isBlockingPossible()){
             return;
         }
@@ -29,7 +26,7 @@ public class Assassin extends Fighter {
         int damage = calculatesAttackDamage(getAttack());
 
         if(isDamageIncreasePossible()){
-            damage = damage * 3;
+            damage = damage * 2;
         }
 
         health -= (damage-armor);
@@ -37,11 +34,19 @@ public class Assassin extends Fighter {
     }
 
     public boolean isDamageIncreasePossible(){
-        int randomNumber = RandomNumber.generateRandomNumber(100);
-        if(randomNumber < 30){
+        int randomNumber = RandomNumber.generateRandomNumber(10);
+        if(randomNumber == 3){
             return true;
         }
         return false;
     }
 
+    @Override
+    public boolean isBlockingPossible(){
+        int randomNumber = RandomNumber.generateRandomNumber(5);
+        if(randomNumber == 3) {
+            return true;
+        }
+        return false;
+    }
 }

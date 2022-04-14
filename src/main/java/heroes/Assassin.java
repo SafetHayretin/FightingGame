@@ -1,26 +1,25 @@
-package Heroes;
+package heroes;
 
-import Extras.RandomNumber;
-import Heroes.Fighter;
+import utilities.RandomNumber;
 
-public class Knight extends Fighter{
-    String type = "Knight";
-
+public class Assassin extends Fighter {
     /**
      * Heroes.Fighter with 3 parameters
+     *
      * @param health can't be negative
      * @param attack can't be negative
      * @param armor  can't be negative
      */
-    public Knight(int health, int attack, int armor) {
-        super(health, attack, armor);
+    public Assassin(String name, int health, int attack, int armor) {
+        super(name, health, attack, armor);
     }
 
     /**
      * A way that your fighter attacks the opponent
      */
-    public void attackMove(Fighter enemy) {
+    public void attackEnemy(Fighter enemy) {
         if(enemy.isBlockingPossible()){
+            System.out.println(enemy.getName() + " blocked coming attack!");
             return;
         }
 
@@ -29,7 +28,8 @@ public class Knight extends Fighter{
         int damage = calculatesAttackDamage(getAttack());
 
         if(isDamageIncreasePossible()){
-            damage = damage * 2;
+            damage = damage * 3;
+            System.out.println(getName() + "-critical damage!");
         }
 
         health -= (damage-armor);
@@ -37,19 +37,13 @@ public class Knight extends Fighter{
     }
 
     public boolean isDamageIncreasePossible(){
-        int randomNumber = RandomNumber.generateRandomNumber(10);
-        if(randomNumber == 3){
+        int randomNumber = RandomNumber.generateRandomNumber(100);
+        if(randomNumber < 30){
             return true;
         }
         return false;
     }
 
-    @Override
-    public boolean isBlockingPossible(){
-        int randomNumber = RandomNumber.generateRandomNumber(5);
-        if(randomNumber == 3) {
-            return true;
-        }
-        return false;
-    }
+
+
 }

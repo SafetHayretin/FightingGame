@@ -1,10 +1,6 @@
-package Heroes;
-
-import Heroes.Fighter;
+package heroes;
 
 public class Warrior extends Fighter {
-    String type = "Warrior";
-
     /**
      * Heroes.Fighter with 3 parameters
      *
@@ -12,14 +8,14 @@ public class Warrior extends Fighter {
      * @param attack can't be negative
      * @param armor  can't be negative
      */
-    public Warrior(int health, int attack, int armor) {
-        super(health, attack, armor);
+    public Warrior(String name, int health, int attack, int armor) {
+        super(name, health, attack, armor);
     }
 
     /**
      * A way that your fighter attacks the opponent
      */
-    public void attackMove(Fighter enemy) {
+    public void attackEnemy(Fighter enemy) {
         if(enemy.isBlockingPossible()){
             return;
         }

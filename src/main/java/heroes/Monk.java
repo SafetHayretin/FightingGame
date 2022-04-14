@@ -1,10 +1,6 @@
-package Heroes;
-
-import Heroes.Fighter;
+package heroes;
 
 public class Monk extends Fighter {
-    String type = "Monk";
-
     /**
      * Heroes.Fighter with 3 parameters
      *
@@ -12,12 +8,12 @@ public class Monk extends Fighter {
      * @param attack can't be negative
      * @param armor  can't be negative
      */
-    public Monk(int health, int attack, int armor) {
-        super(health, attack, armor);
+    public Monk(String name, int health, int attack, int armor) {
+        super(name, health, attack, armor);
     }
 
     @Override
-    public void attackMove(Fighter enemy) {
+    public void attackEnemy(Fighter enemy) {
         if(enemy.isBlockingPossible()){
             return;
         }
