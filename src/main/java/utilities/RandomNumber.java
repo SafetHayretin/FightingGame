@@ -8,14 +8,14 @@ public class RandomNumber {
     /**
      * Generates random number
      */
-    public static int generateRandomNumber(int upperBound){
-        return  random.nextInt(upperBound);
+    public static int generateRandomNumber(int max) {
+        return random.nextInt(max+1);
     }
 
     /**
-     * Generates random number with prefixed upperBound
+     * Generates random number between two numbers
      */
-    public static double generateRandomNumber(){
-        return  random.nextInt(41);
+    public static double generateRandomNumber(int min, int max) {
+        return random.nextInt(max+1) + min;
     }
 }

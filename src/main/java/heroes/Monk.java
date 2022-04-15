@@ -1,28 +1,34 @@
 package heroes;
 
+import utilities.RandomNumber;
+
 public class Monk extends Fighter {
-    /**
-     * Heroes.Fighter with 3 parameters
-     *
-     * @param health can't be negative
-     * @param attack can't be negative
-     * @param armor  can't be negative
-     */
+
     public Monk(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void attackEnemy(Fighter enemy) {
-        if(enemy.isBlockingPossible()){
-            return;
+    public int calculateDamageMultiplier() {
+        return 1;
+    }
+
+
+    /**
+     * Checks if blocking is possible.
+     * Knight has 30% chance of blocking incoming attacks.
+     *
+     * @return True if he blocks the attack.
+     */
+    @Override
+    public boolean isBlockingPossible() {
+        int randomNumber = RandomNumber.generateRandomNumber(100);
+        if (randomNumber <= 30) {
+            return true;
         }
-
-        int health = enemy.getHealth();
-        int armor = calculatesArmorPoints(enemy.getArmor());
-        int damage = calculatesAttackDamage(getAttack());
-
-        health -= (damage-armor);
-        enemy.setHealth(health);
+        return false;
     }
 }

@@ -3,47 +3,35 @@ package heroes;
 import utilities.RandomNumber;
 
 public class Assassin extends Fighter {
-    /**
-     * Heroes.Fighter with 3 parameters
-     *
-     * @param health can't be negative
-     * @param attack can't be negative
-     * @param armor  can't be negative
-     */
+
     public Assassin(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
     }
 
     /**
-     * A way that your fighter attacks the opponent
+     * {@inheritDoc}
      */
-    public void attackEnemy(Fighter enemy) {
-        if(enemy.isBlockingPossible()){
-            System.out.println(enemy.getName() + " blocked coming attack!");
-            return;
+    @Override
+    public int calculateDamageMultiplier() {
+        if (isDamageIncreasePossible()) {
+            return 3;
         }
-
-        int health = enemy.getHealth();
-        int armor = calculatesArmorPoints(enemy.getArmor());
-        int damage = calculatesAttackDamage(getAttack());
-
-        if(isDamageIncreasePossible()){
-            damage = damage * 3;
-            System.out.println(getName() + "-critical damage!");
-        }
-
-        health -= (damage-armor);
-        enemy.setHealth(health);
+        return 1;
     }
 
-    public boolean isDamageIncreasePossible(){
+
+    /**
+     * Fighter has 30% chance of dealing critical damage.
+     *
+     * @return True if critical damage is possible.
+     */
+    public boolean isDamageIncreasePossible() {
         int randomNumber = RandomNumber.generateRandomNumber(100);
-        if(randomNumber < 30){
+        if (randomNumber <= 30) {
             return true;
         }
         return false;
     }
-
 
 
 }
