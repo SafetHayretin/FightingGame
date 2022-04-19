@@ -1,6 +1,6 @@
 package eu.deltasorce.internship.fightinggame.heroes;
 
-import eu.deltasorce.internship.fightinggame.utilities.RandomNumber;
+import eu.deltasorce.internship.fightinggame.utilities.RandomNumberGenerator;
 
 /**
  * Fighter class with health, armor and attack.
@@ -11,6 +11,7 @@ import eu.deltasorce.internship.fightinggame.utilities.RandomNumber;
  * When creating your fighter you can NOT set your health, armor or attack points to negative number.
  */
 public abstract class Fighter {
+
     private String name;
 
     private int health;
@@ -20,8 +21,9 @@ public abstract class Fighter {
     private int attack;
 
     /**
-     * Fighter with 3 parameters.
+     * Fighter with 4 parameters.
      *
+     * @param name   Store fighter's name.
      * @param health Stores fighter's health.
      * @param attack Stores fighter's attack points.
      * @param armor  Stores fighters' armor points.
@@ -40,7 +42,7 @@ public abstract class Fighter {
      * Then fighter does the attack.
      */
     public final void attackEnemy(Fighter enemy) {
-        if (enemy.isBlockingPossible()) {
+        if (enemy.isBlockingAttack()) {
             System.out.println(enemy.getName() + " blocked the attack.");
             return;
         }
@@ -55,14 +57,14 @@ public abstract class Fighter {
      * @param enemy      the opponent who we attack.
      * @param multiplier is coefficient that damage dealt is increased.
      */
-    public void baseAttack(Fighter enemy, int multiplier) {
+    private void baseAttack(Fighter enemy, int multiplier) {
         int healthOfTheAttackedHero = enemy.getHealth();
-        int armorOfTheAttackedHero = calculateArmorPoints(enemy.getArmor());
-        int damageOfTheAttacker = calculateAttackDamage(getAttack());
+        int armorOfTheAttackedHero = calculatePoints(enemy.getArmor());
+        int damageOfTheAttacker = calculatePoints(getAttack());
 
         damageOfTheAttacker = damageOfTheAttacker * multiplier;
 
-        healthOfTheAttackedHero -= (damageOfTheAttacker - armorOfTheAttackedHero);
+        healthOfTheAttackedHero = healthOfTheAttackedHero - (damageOfTheAttacker - armorOfTheAttackedHero);
         enemy.updateFighterHealthPoints(healthOfTheAttackedHero);
 
         System.out.println(getName() + " attacked " + enemy.getName() + " for " +
@@ -74,45 +76,29 @@ public abstract class Fighter {
      * If it is possible return the times it is increased
      * If it is not return 1.
      */
-    public abstract int calculateDamageMultiplier();
+    protected abstract int calculateDamageMultiplier();
 
     /**
-     * Calculates the damage after processing it with the percentage between 80% and 120%.
+     * Calculates points after processing it with the percentage between 80% and 120%.
      */
-    public int calculateAttackDamage(int damage) {
-        double percentage = generatePercentage();
-        return (int) (damage * percentage);
-    }
-
-    /**
-     * Calculates armor after processing it with the percentage between 80% and 120%.
-     */
-    public int calculateArmorPoints(int armor) {
-        double percentage = generatePercentage();
-        return (int) (armor * percentage);
+    private int calculatePoints(int points) {
+        double percentage = calculatePercentage();
+        return (int) (points * percentage);
     }
 
     /**
      * @return percentage between 80% and 120%.
      */
-    public double generatePercentage() {
-        return (RandomNumber.generateRandomNumber(80, 120)) / 100;
+    private double calculatePercentage() {
+        return (double) RandomNumberGenerator.generateRandomNumber(80, 120) / 100;
     }
 
-    public boolean isBlockingPossible() {
+    protected boolean isBlockingAttack() {
         return false;
     }
 
-    public boolean isCriticalAttack() {
-        return false;
-    }
-
-    public void updateFighterHealthPoints(int health){
-        if (health <= 0) {
-            this.health = 0;
-        } else {
-            this.health = health;
-        }
+    private void updateFighterHealthPoints(int health) {
+        this.health = Math.max(health, 0);
     }
 
     public int getHealth() {
@@ -131,9 +117,8 @@ public abstract class Fighter {
         return name;
     }
 
-
     public void setName(String name) {
-        if (name == null || name.equals("")) {
+        if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name can't be empty!");
         }
         this.name = name;

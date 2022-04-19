@@ -4,7 +4,10 @@ import eu.deltasorce.internship.fightinggame.heroes.Fighter;
 
 /**
  * Game engine where the battle begins.
- * We create 2 fighters and the start attacking each other.
+ * We create 2 fighters, they start attacking each other.
+ * The only purpose of the class is to simulate fighting battle between 2 fighters.
+ * It has one method that simulates the battle.
+ * It has method that checks if player is still alive.
  */
 public class GameEngine {
     /**
@@ -17,8 +20,12 @@ public class GameEngine {
             player2.attackEnemy(player1);
             System.out.println();
         }
-        System.out.println(player1.getName() + " " + player1.getHealth());
-        System.out.println(player2.getName() + " " + player2.getHealth());
+
+        if (isFighterAlive(player1)) {
+            System.out.println(player1.getName() + " won the battle!");
+        } else if (isFighterAlive(player2)) {
+            System.out.println(player2.getName() + " won the battle!");
+        } else System.out.println("Nobody won! It's draw.");
         System.out.println();
     }
 

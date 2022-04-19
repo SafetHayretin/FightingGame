@@ -1,7 +1,7 @@
 package eu.deltasorce.internship.fightinggame.heroes;
 
 
-import eu.deltasorce.internship.fightinggame.utilities.RandomNumber;
+import eu.deltasorce.internship.fightinggame.utilities.RandomNumberGenerator;
 
 public class Monk extends Fighter {
 
@@ -17,7 +17,6 @@ public class Monk extends Fighter {
         return 1;
     }
 
-
     /**
      * Checks if blocking is possible.
      * Knight has 30% chance of blocking incoming attacks.
@@ -25,8 +24,8 @@ public class Monk extends Fighter {
      * @return True if he blocks the attack.
      */
     @Override
-    public boolean isBlockingPossible() {
+    public boolean isBlockingAttack() {
         int blockPercentage = 30;
-        return RandomNumber.generatePercentage() <= blockPercentage;
+        return RandomNumberGenerator.generateNumberFromOneToHundred() <= blockPercentage;
     }
 }

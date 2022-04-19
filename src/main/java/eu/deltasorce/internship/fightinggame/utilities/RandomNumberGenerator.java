@@ -2,21 +2,21 @@ package eu.deltasorce.internship.fightinggame.utilities;
 
 import java.util.Random;
 
-public class RandomNumber {
+public final class RandomNumberGenerator {
 
     static Random random = new Random();
 
     /**
      * Generates random number between two numbers.
      */
-    public static double generateRandomNumber(int min, int max) {
-        return random.nextInt(max+1) + min;
+    public static int generateRandomNumber(int min, int max) {
+        return random.nextInt(max - min + 1) + min;
     }
 
     /**
-     * Generate random number to 100 for percentage.
+     * Generate random number to 100.
      */
-    public static int generatePercentage(){
+    public static int generateNumberFromOneToHundred() {
         return random.nextInt(101);
     }
 }

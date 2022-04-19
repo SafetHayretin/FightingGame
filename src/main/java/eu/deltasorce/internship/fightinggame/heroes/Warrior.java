@@ -15,5 +15,4 @@ public class Warrior extends Fighter {
         return 1;
     }
 
-
 }

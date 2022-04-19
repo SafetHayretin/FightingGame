@@ -1,7 +1,7 @@
 package eu.deltasorce.internship.fightinggame.heroes;
 
 
-import eu.deltasorce.internship.fightinggame.utilities.RandomNumber;
+import eu.deltasorce.internship.fightinggame.utilities.RandomNumberGenerator;
 
 public class Assassin extends Fighter {
 
@@ -15,10 +15,7 @@ public class Assassin extends Fighter {
      */
     @Override
     public int calculateDamageMultiplier() {
-        if (isCriticalAttack()) {
-            return 3;
-        }
-        return 1;
+        return isCriticalAttack() ? 3 : 1;
     }
 
     /**
@@ -28,8 +25,6 @@ public class Assassin extends Fighter {
      */
     public boolean isCriticalAttack() {
         int criticalPercentage = 30;
-        return RandomNumber.generatePercentage() <= criticalPercentage;
+        return RandomNumberGenerator.generateNumberFromOneToHundred() <= criticalPercentage;
     }
-
-
 }
