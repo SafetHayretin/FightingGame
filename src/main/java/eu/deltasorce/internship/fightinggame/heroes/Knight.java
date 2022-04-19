@@ -1,7 +1,6 @@
 package eu.deltasorce.internship.fightinggame.heroes;
 
-
-import eu.deltasorce.internship.fightinggame.utilities.RandomNumberGenerator;
+import static eu.deltasorce.internship.fightinggame.utilities.RandomNumberGenerator.generateNumberFromOneToHundred;
 
 /**
  * Knight is fighter who has some base stats and special abilities like blocking damage and doing critical damage.
@@ -16,10 +15,7 @@ public class Knight extends Fighter {
 
     @Override
     public int calculateDamageMultiplier() {
-        if (isCriticalAttack()) {
-            return 2;
-        }
-        return 1;
+        return isCriticalAttack() ? 2 : 1;
     }
 
     /**
@@ -30,7 +26,7 @@ public class Knight extends Fighter {
      */
     public boolean isCriticalAttack() {
         int criticalPercentage = 10;
-        return RandomNumberGenerator.generateNumberFromOneToHundred() <= criticalPercentage;
+        return generateNumberFromOneToHundred() <= criticalPercentage;
     }
 
     /**
@@ -42,6 +38,6 @@ public class Knight extends Fighter {
     @Override
     public boolean isBlockingAttack() {
         int blockPercentage = 20;
-        return RandomNumberGenerator.generateNumberFromOneToHundred() <= blockPercentage;
+        return generateNumberFromOneToHundred() <= blockPercentage;
     }
 }

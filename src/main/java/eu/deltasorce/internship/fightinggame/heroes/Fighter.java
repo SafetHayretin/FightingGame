@@ -1,6 +1,6 @@
 package eu.deltasorce.internship.fightinggame.heroes;
 
-import eu.deltasorce.internship.fightinggame.utilities.RandomNumberGenerator;
+import static eu.deltasorce.internship.fightinggame.utilities.RandomNumberGenerator.generateRandomNumber;
 
 /**
  * Fighter class with health, armor and attack.
@@ -62,13 +62,16 @@ public abstract class Fighter {
         int armorOfTheAttackedHero = calculatePoints(enemy.getArmor());
         int damageOfTheAttacker = calculatePoints(getAttack());
 
-        damageOfTheAttacker = damageOfTheAttacker * multiplier;
+        damageOfTheAttacker = calculateCriticalDamage(damageOfTheAttacker, multiplier);
 
-        healthOfTheAttackedHero = healthOfTheAttackedHero - (damageOfTheAttacker - armorOfTheAttackedHero);
-        enemy.updateFighterHealthPoints(healthOfTheAttackedHero);
+        enemy.updateFighterHealthPoints(healthOfTheAttackedHero, damageOfTheAttacker, armorOfTheAttackedHero);
 
         System.out.println(getName() + " attacked " + enemy.getName() + " for " +
-                (damageOfTheAttacker - armorOfTheAttackedHero) + " damage.");
+                (damageOfTheAttacker - armorOfTheAttackedHero) + " damage. " + "Health left: " + enemy.getHealth());
+    }
+
+    public int calculateCriticalDamage(int damage, int multiplier) {
+        return damage * multiplier;
     }
 
     /**
@@ -81,7 +84,7 @@ public abstract class Fighter {
     /**
      * Calculates points after processing it with the percentage between 80% and 120%.
      */
-    private int calculatePoints(int points) {
+    public int calculatePoints(int points) {
         double percentage = calculatePercentage();
         return (int) (points * percentage);
     }
@@ -89,15 +92,16 @@ public abstract class Fighter {
     /**
      * @return percentage between 80% and 120%.
      */
-    private double calculatePercentage() {
-        return (double) RandomNumberGenerator.generateRandomNumber(80, 120) / 100;
+    public double calculatePercentage() {
+        return (double) generateRandomNumber(80, 120) / 100;
     }
 
     protected boolean isBlockingAttack() {
         return false;
     }
 
-    private void updateFighterHealthPoints(int health) {
+    public void updateFighterHealthPoints(int health, int damage, int armor) {
+        health = health - (damage - armor);
         this.health = Math.max(health, 0);
     }
 

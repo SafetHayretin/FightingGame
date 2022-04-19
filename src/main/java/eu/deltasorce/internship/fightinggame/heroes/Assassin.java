@@ -1,7 +1,6 @@
 package eu.deltasorce.internship.fightinggame.heroes;
 
-
-import eu.deltasorce.internship.fightinggame.utilities.RandomNumberGenerator;
+import static eu.deltasorce.internship.fightinggame.utilities.RandomNumberGenerator.generateNumberFromOneToHundred;
 
 public class Assassin extends Fighter {
 
@@ -25,6 +24,6 @@ public class Assassin extends Fighter {
      */
     public boolean isCriticalAttack() {
         int criticalPercentage = 30;
-        return RandomNumberGenerator.generateNumberFromOneToHundred() <= criticalPercentage;
+        return generateNumberFromOneToHundred() <= criticalPercentage;
     }
 }

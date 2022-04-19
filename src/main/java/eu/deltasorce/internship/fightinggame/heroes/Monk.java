@@ -1,7 +1,6 @@
 package eu.deltasorce.internship.fightinggame.heroes;
 
-
-import eu.deltasorce.internship.fightinggame.utilities.RandomNumberGenerator;
+import static eu.deltasorce.internship.fightinggame.utilities.RandomNumberGenerator.generateNumberFromOneToHundred;
 
 public class Monk extends Fighter {
 
@@ -26,6 +25,6 @@ public class Monk extends Fighter {
     @Override
     public boolean isBlockingAttack() {
         int blockPercentage = 30;
-        return RandomNumberGenerator.generateNumberFromOneToHundred() <= blockPercentage;
+        return generateNumberFromOneToHundred() <= blockPercentage;
     }
 }
